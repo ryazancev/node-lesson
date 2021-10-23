@@ -21,7 +21,7 @@ app.set('views', 'views');
 
 app.use( async (req,res,next) => {
     try {
-        req.user = await User.findById('614b37822c9a20dbdee6da91');
+        req.user = await User.findById('6171e97c239d305e4e7bcfdc'); // Временный user где id мы копируем из базы
         next();
     } catch (e) {
         console.log(e)
@@ -45,7 +45,7 @@ const start = async () => {
         await mongoose.connect(url, {
             useNewUrlParser: true,
         });
-        const condidate = await User.findOne();
+        const condidate = await User.findOne().lean();
 
         if (!condidate) {
             const user = new User({

@@ -19,7 +19,8 @@ const userSchema = new Schema({
                 },
                 courseId: {
                     type: Schema.Types.ObjectId,
-                    ref: 'Course'
+                    ref: 'Course',
+                    required: true
                 }
             }
         ]
@@ -28,13 +29,16 @@ const userSchema = new Schema({
 
 userSchema.methods.addToCart = function (course) {
     const items = [...this.cart.items];
+    // находим индекс курса, который лежит в массиве
     const idx = items.findIndex(c => {
+        // сравниваем id курсов
         return c.courseId.toString() === course._id.toString()
     });
 
     if (idx >= 0) {
         items[idx].count = items[idx].count + 1;
     } else {
+        // findIndex если не нашел элемент в массиве вернет -1
         items.push({
             courseId: course._id,
             count: 1
