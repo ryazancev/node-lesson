@@ -3,7 +3,7 @@
         <div class="col s12">
             <ul class="tabs">
                 <li class="tab col s6"><a class="active" href="#login">Войти</a></li>
-                <li class="tab col s6"><a href="#register">Test 2</a>Регистрация</li>
+                <li class="tab col s6"><a href="#register">Регистрация</a></li>
             </ul>
         </div>
         <div id="login" class="col s6 offset-s3">
@@ -19,7 +19,7 @@
                     <label for="password">Пароль</label>
                     <span class="helper-text" data-error="Введите пароль"></span>
                 </div>
-
+                <input type="hidden" name="_csrf" value="{{csrf}}">
                 <button class="btn btn-primary" type="submit">Войти</button>
             </form>
         </div>
@@ -32,6 +32,11 @@
                     <span class="helper-text" data-error="Введите email"></span>
                 </div>
                 <div class="input-field">
+                    <input id="name" type="text" class="validate" name="name" required>
+                    <label for="name">Ваше имя</label>
+                    <span class="helper-text" data-error="Введите имя"></span>
+                </div>
+                <div class="input-field">
                     <input id="rpassword" type="password" class="validate" name="password" required>
                     <label for="rpassword">Пароль</label>
                     <span class="helper-text" data-error="Введите пароль"></span>
@@ -41,7 +46,7 @@
                     <label for="confirm">Пароль еще раз</label>
                     <span class="helper-text" data-error="Введите пароль"></span>
                 </div>
-
+                <input type="hidden" name="_csrf" value="{{csrf}}">
                 <button class="btn btn-primary" type="submit">Зарегистрироваться</button>
             </form>
         </div>

@@ -1,9 +1,10 @@
 const path = require('path');
 const express = require('express');
+const csrf = require('csurf');
 const exphbs = require('express-handlebars');
 const session = require('express-session');
-const MongoStore = require('connect-mongodb-session')(session);
 const mongoose = require('mongoose');
+const MongoStore = require('connect-mongodb-session')(session);
 const homeRoutes = require('./routes/home');
 const addRoutes = require('./routes/add');
 const coursesRoutes = require('./routes/courses');
@@ -41,6 +42,7 @@ app.use(session({
     saveUninitialized: false,
     store
 }));
+app.use(csrf());
 app.use(varMiddleware);
 app.use(userMiddleware);
 

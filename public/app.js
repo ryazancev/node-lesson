@@ -32,9 +32,13 @@ if ($cart) {
 
         if (target.classList.contains('js-remove')) {
             const id = target.dataset.id;
-
+            const csrf = target.dataset.csrf;
             fetch('/cart/remove' + id, {
-                method: 'delete'
+                method: 'delete',
+                //  Передаем токе через специальный заголовок
+                headers: {
+                    'X-XSRF-TOKEN': csrf
+                }
             })
                 .then((res) => res.json())
                 .then((cart) => {
