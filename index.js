@@ -14,9 +14,8 @@ const ordersRoutes = require('./routes/orders');
 const authRoutes = require('./routes/auth');
 const varMiddleware = require('./middleware/variables.js');
 const userMiddleware = require('./middleware/user.js');
+const keys = require('./keys');
 
-// url нашей БД
-const MONGODB_URI = 'mongodb+srv://ryazanb:8XgUAaacADW3C1r5@cluster0.neans.mongodb.net/shop';
 // Создаем экземпляр приложения
 const app = express();
 // Настраиваем шаблонизатор
@@ -27,7 +26,7 @@ const hbs = exphbs.create({
 // Создаем экземпляр на базе класса MongoStore
 const store = new MongoStore({
     collection: 'sessions', // Название коллекции (поля) в БД
-    uri: MONGODB_URI
+    uri: keys.MONGODB_URI
 });
 
 app.engine('hbs', hbs.engine);
@@ -37,7 +36,7 @@ app.set('views', 'views');
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({extended: true}));
 app.use(session({
-    secret: 'value', // временно
+    secret: keys.SESSION_SECRET, // временно
     resave: false,
     saveUninitialized: false,
     store
@@ -58,7 +57,7 @@ const PORT = process.env.PORT || 3000;
 
 const start = async () => {
     try {
-        await mongoose.connect(MONGODB_URI, {
+        await mongoose.connect(keys.MONGODB_URI, {
             useNewUrlParser: true,
         });
         // const condidate = await User.findOne().lean();
