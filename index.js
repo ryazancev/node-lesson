@@ -21,7 +21,8 @@ const app = express();
 // Настраиваем шаблонизатор
 const hbs = exphbs.create({
     defaultLayout: 'main',
-    extname: 'hbs'
+    extname: 'hbs',
+    helpers: require('./utils/hbs-helpers')
 });
 // Создаем экземпляр на базе класса MongoStore
 const store = new MongoStore({
