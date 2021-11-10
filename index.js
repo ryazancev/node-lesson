@@ -15,6 +15,7 @@ const authRoutes = require('./routes/auth');
 const varMiddleware = require('./middleware/variables.js');
 const userMiddleware = require('./middleware/user.js');
 const keys = require('./keys');
+const errorHandler = require('./middleware/error');
 
 // Создаем экземпляр приложения
 const app = express();
@@ -53,6 +54,7 @@ app.use('/courses', coursesRoutes);
 app.use('/cart', cartRoutes);
 app.use('/orders', ordersRoutes);
 app.use('/auth', authRoutes);
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 3000;
 
