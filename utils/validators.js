@@ -1,0 +1,15 @@
+const { body } = require('express-validator/check');
+
+exports.registerValidators = [
+    body('email').isEmail().withMessage('Введите корректный email'),
+    body('password', 'Пароль должен быть минимум 6 символов').isLength({min: 6, max: 56}).isAlphanumeric(), // валидатор для пароля
+    body('confirm')
+        .custom((value, {req}) => {
+            if (value !== req.body.password) {
+                throw new Error('Пароли не совпадают');
+            } else {
+                return true
+            }
+        }),
+    body('name').isLength({min: 3}).withMessage('Имя должно быть минимум 3 символа')
+];

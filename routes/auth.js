@@ -1,4 +1,4 @@
-const {Router} = require("express");
+const { Router } = require("express");
 const router = Router();
 const User = require('../models/user');
 const bcrypt = require('bcryptjs');
@@ -8,6 +8,8 @@ const keys = require("../keys");
 const regEmail = require('../emails/registration');
 const crypto = require('crypto');
 const resetEmail = require('../emails/reset');
+const { validationResult } = require('express-validator/check');
+const { registerValidators } = require('../utils/validators.js');
 
 const transporter = nodemailer.createTransport(sendgrid({
     auth: {api_key: keys.SENDGRID_API_KEY}
@@ -59,10 +61,16 @@ router.post('/login', async (req, res) => {
     }
 });
 
-router.post('/register', async (req, res) => {
+router.post('/register', registerValidators, async (req, res) => {
     try {
-        const { email, password, repeat, name } = req.body;
+        const { email, password, confirm, name } = req.body;
         const candidate = await User.findOne({ email });
+        const errors = validationResult(req);
+
+        if (!errors.isEmpty()) {
+            req.flash('registerError', errors.array()[0].msg);
+            return res.status(422).redirect('/auth/login#register');
+        }
         if (candidate) {
             // Обрабатываем ошибку
             req.flash('registerError', 'Пользователь с таким email уже существует');
