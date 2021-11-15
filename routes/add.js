@@ -3,7 +3,7 @@ const Course = require('../models/course');
 const router = Router();
 const auth = require('../middleware/auth');
 const { courseValidators } = require('../utils/validators');
-const { validationResult } = require('express-validator/check');
+const { validationResult } = require('express-validator');
 
 router.get('/', auth, (req, res) => {
     res.render('add', {
